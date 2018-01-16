@@ -1,0 +1,50 @@
+[
+{
+	"amountDays": "31",
+	"month": "January"
+},
+{
+	"amountDays": "28",
+	"month": "February"
+},
+{
+	"amountDays": "31",
+	"month": "March"
+},
+{
+	"amountDays": "30",
+	"month": "April"
+},
+{
+	"amountDays": "31",
+	"month": "May"
+},
+{
+	"amountDays": "30",
+	"month": "June"
+},
+{
+	"amountDays": "31",
+	"month": "July"
+},
+{
+	"amountDays": "31",
+	"month": "August"
+},
+{
+	"amountDays": "30",
+	"month": "September"
+},
+{
+	"amountDays": "31",
+	"month": "October"
+},
+{
+	"amountDays": "30",
+	"month": "November"
+},
+{
+	"amountDays": "31",
+	"month": "December"
+}
+]
