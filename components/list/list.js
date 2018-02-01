@@ -16,15 +16,24 @@ class List {
         if  ( firstDay == 0 ) firstDay = 7;
         return firstDay - 1;
     }
+    getEndDay(date,daysMonth) { 
+        let getYear = date.getFullYear();
+        let getMonth = date.getMonth();
+        let foFirstDay = new Date( getYear, getMonth, daysMonth );
+        let endDay = foFirstDay.getDay();
+        if  ( endDay == 0 ) endDay = 7;
+        return endDay - 1;
+    }
 
-    getTable(weekday, daysMonth, arrDay) {
+    getTable(weekday, daysMonth, arrDay, weekdayEnd) {
         for ( let i = 0; i < weekday; i++ ) { arrDay.push(`<td></td>`) };
         for ( let i = 1; i <= daysMonth; i++ ) { 
             let nom = i;
             arrDay.push(`<td>${nom}</td>`) 
         };
+        for ( let i = weekdayEnd; i < 6 ; i++ ) { arrDay.push(`<td></td>`) };
         for (let i = 1; i <= arrDay.length; i++) {
-            if ((i % 7) == 6) { arrDay[i]+='</tr><tr>' }
+            if (i % 7 == 6) { arrDay[i]+='</tr><tr>' }
         };
     }
 
@@ -32,19 +41,20 @@ class List {
         let arrDay = [];
         let daysMonth = data[this.startMonth].amountDays;
         let weekday = this.getFirstDay(date);
- 
+        let weekdayEnd = this.getEndDay(date, daysMonth);
+
         let nameMonth = data.map(( data, id ) => {
             let nameM = data.month;
             let dataId = id;
-            let item =`<option class="buttom_delete"  value="${dataId}"> ${nameM} </option>`;
+            let item =`<option class="style_option"  value="${dataId}"> ${nameM} </option>`;
             if ( id == this.startMonth ) {
-                item =`<option class="buttom_delete" value="${dataId}" selected="selected" > ${nameM} </option>`; 
+                item =`<option class="style_option" value="${dataId}" selected="selected" > ${nameM} </option>`; 
             }
             return item;
+ 
         });
 
-        this.getTable( weekday, daysMonth, arrDay );
-
+        this.getTable( weekday, daysMonth, arrDay, weekdayEnd );
         let str = arrDay.join('');
         let renderCalendar = `<tr>`;
         renderCalendar += str;
@@ -58,7 +68,8 @@ class List {
 
     render() {
     let date = new Date( this.startYear, this.startMonth );
-    this.getrender( date );    
+    this.getrender( date );  
+    
     }
 }
 

@@ -86,15 +86,30 @@ class App {
     constructor({ el }) {
         this.el = el;
         this.data = __WEBPACK_IMPORTED_MODULE_1__data_data_json___default.a;
-        this.startYear = 2018;
+        this.getInitYear = this.initialYear();
+        this.getInitMonth = this.initialMonth();
+        this.startYear = this.getInitYear;
+        this.startMonth = this.getInitMonth;
         this._initEvents();
 
         this.table = new __WEBPACK_IMPORTED_MODULE_0__components_list_list__["a" /* default */]({
             data: this.data,
             el: document.querySelector('.calendar'),
             startYear: this.startYear,
-            startMonth: 3
+            startMonth: this.startMonth
         });
+    }
+
+    initialYear() {
+        let initialYear = new Date();
+        let getYear = initialYear.getFullYear();
+        return getYear;
+    }
+
+    initialMonth() {
+        let initialMonth = new Date();
+        let getMonth = initialMonth.getMonth();
+        return getMonth;
     }
 
     _initEvents() {
@@ -105,7 +120,7 @@ class App {
         event.preventDefault();
         let target = event.target;
 
-        if (target.classList.contains('buttom_delete')) {
+        if (target.classList.contains('style_option')) {
             this.table.startMonth = document.getElementById("selectBox").value;
             this.table.render();
         }
@@ -142,14 +157,25 @@ class List {
         if (firstDay == 0) firstDay = 7;
         return firstDay - 1;
     }
+    getEndDay(date, daysMonth) {
+        let getYear = date.getFullYear();
+        let getMonth = date.getMonth();
+        let foFirstDay = new Date(getYear, getMonth, daysMonth);
+        let endDay = foFirstDay.getDay();
+        if (endDay == 0) endDay = 7;
+        return endDay - 1;
+    }
 
-    getTable(weekday, daysMonth, arrDay) {
+    getTable(weekday, daysMonth, arrDay, weekdayEnd) {
         for (let i = 0; i < weekday; i++) {
             arrDay.push(`<td></td>`);
         };
         for (let i = 1; i <= daysMonth; i++) {
             let nom = i;
             arrDay.push(`<td>${nom}</td>`);
+        };
+        for (let i = weekdayEnd; i < 6; i++) {
+            arrDay.push(`<td></td>`);
         };
         for (let i = 1; i <= arrDay.length; i++) {
             if (i % 7 == 6) {
@@ -162,19 +188,19 @@ class List {
         let arrDay = [];
         let daysMonth = __WEBPACK_IMPORTED_MODULE_0__data_data_json___default.a[this.startMonth].amountDays;
         let weekday = this.getFirstDay(date);
+        let weekdayEnd = this.getEndDay(date, daysMonth);
 
         let nameMonth = __WEBPACK_IMPORTED_MODULE_0__data_data_json___default.a.map((data, id) => {
             let nameM = data.month;
             let dataId = id;
-            let item = `<option class="buttom_delete"  value="${dataId}"> ${nameM} </option>`;
+            let item = `<option class="style_option"  value="${dataId}"> ${nameM} </option>`;
             if (id == this.startMonth) {
-                item = `<option class="buttom_delete" value="${dataId}" selected="selected" > ${nameM} </option>`;
+                item = `<option class="style_option" value="${dataId}" selected="selected" > ${nameM} </option>`;
             }
             return item;
         });
 
-        this.getTable(weekday, daysMonth, arrDay);
-
+        this.getTable(weekday, daysMonth, arrDay, weekdayEnd);
         let str = arrDay.join('');
         let renderCalendar = `<tr>`;
         renderCalendar += str;
