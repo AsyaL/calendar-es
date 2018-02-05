@@ -44,6 +44,14 @@ class App {
             this.table.startMonth = document.getElementById("selectBox").value;
             this.table.render();
         }   
+        if (target.classList.contains('minus')) {
+            this.table.startYear = this.table.startYear - 1;
+            this.table.render();
+        } 
+        if (target.classList.contains('plus')) {
+            this.table.startYear = this.table.startYear + 1;
+            this.table.render();
+        } 
     }
 
 

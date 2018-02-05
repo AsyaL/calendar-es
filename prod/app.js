@@ -124,6 +124,14 @@ class App {
             this.table.startMonth = document.getElementById("selectBox").value;
             this.table.render();
         }
+        if (target.classList.contains('minus')) {
+            this.table.startYear = this.table.startYear - 1;
+            this.table.render();
+        }
+        if (target.classList.contains('plus')) {
+            this.table.startYear = this.table.startYear + 1;
+            this.table.render();
+        }
     }
 
 }
@@ -148,7 +156,10 @@ class List {
         this.startMonth = options.startMonth;
         this.render();
     }
-
+    isLeapYear() {
+        let y = this.startYear;
+        return y % 4 == 0 && y % 100 != 0 || y % 400 == 0;
+    }
     getFirstDay(date) {
         let getYear = date.getFullYear();
         let getMonth = date.getMonth();
@@ -185,6 +196,9 @@ class List {
     }
 
     getrender(date) {
+        if (this.isLeapYear()) {
+            __WEBPACK_IMPORTED_MODULE_0__data_data_json___default.a[1].amountDays = 29;
+        }
         let arrDay = [];
         let daysMonth = __WEBPACK_IMPORTED_MODULE_0__data_data_json___default.a[this.startMonth].amountDays;
         let weekday = this.getFirstDay(date);
@@ -207,8 +221,8 @@ class List {
         this.el.innerHTML = `
        
         <div><select id="selectBox" >${nameMonth}</select>
-        <div class="year">${this.startYear}</div></div>
-        <table><tbody><tr><td>Mon</td><td>Fr</td><td>F</td><td>V</td><td>Fr</td><td>S</td><td>S</td</tr>
+        <div class="year"><span class="minus">-</span>${this.startYear}<span class="plus">+</span></div></div>
+        <table><tbody><tr><td>Mon</td><td>Tue</td><td>Wed</td><td>Thu</td><td>Fri</td><td>Sat</td><td>Sun</td</tr>
         ${renderCalendar}  
         </tbody>
         </table>`;
