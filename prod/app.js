@@ -205,7 +205,9 @@ class List {
         let renderCalendar = `<tr>`;
         renderCalendar += str;
         this.el.innerHTML = `
-        <caption><select id="selectBox" >${nameMonth}</select></caption>
+       
+        <div><select id="selectBox" >${nameMonth}</select>
+        <div class="year">${this.startYear}</div></div>
         <table><tbody><tr><td>Mon</td><td>Fr</td><td>F</td><td>V</td><td>Fr</td><td>S</td><td>S</td</tr>
         ${renderCalendar}  
         </tbody>
