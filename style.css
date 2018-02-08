@@ -10,12 +10,20 @@ table {
 	border: 3px solid rgb(28, 241, 249);
 	box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
 }
-td {
+.style_td {
 	border: 1px solid #87bcd4;
 	width: 40px;
 	height: 30px;
 	background: #7f818366;
 	color: #edf3ff;
+	text-align: center;
+}
+.style_week_td {
+	border: 1px solid #87bcd4;
+	width: 40px;
+	height: 30px;
+	text-shadow: 1px 1px 5px black, 0 0 1em #0b15f2;
+	background: #1cf1f9cc;
 	text-align: center;
 }
 .calendar {
@@ -34,7 +42,7 @@ td {
 #selectBox {
 	padding: 5px 20px;
 	margin: 25px 1px 10px 1px;
-	background-color: #14191b;
+	background: #7f818366;
 	border: 1px solid #1cf1f9;
 	color: #c0cbd1;
 	font-size: 13px;
@@ -52,11 +60,20 @@ td {
 	margin: 0px 0px 0px 3px;
     border: 1px solid #1cf1f9;
     padding:  5px 8px 2px 8px;
+    background: #7f818366;
 }
 .minus {
 	margin: 0px 3px 0px 3px;
     border:  1px solid #1cf1f9;
     padding:  5px 10px 2px 10px;
+    background: #7f818366;
 }
+.today {
+	text-shadow: 1px 1px 5px black, 0 0 1em #0b15f2;
+	background: #1cf1f9cc;
+	text-align: center;
 }
+.highlight {
+	background: #80ce87;;
 }
+

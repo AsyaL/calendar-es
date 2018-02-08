@@ -6,10 +6,10 @@ class App {
 		constructor({el}) {
         this.el = el;
         this.data = data;
-        this.getInitYear = this.initialYear();
-        this.getInitMonth = this.initialMonth();
-        this.startYear = this.getInitYear;
-        this.startMonth = this.getInitMonth;
+        let initialDate = this.initialDate();
+        this.startYear = initialDate.getYear;
+        this.startMonth = initialDate.getMonth;
+        this.startDay = initialDate.getDay;
         this._initEvents();
         
         this.table = new List({
@@ -17,20 +17,21 @@ class App {
         el: document.querySelector('.calendar'),
         startYear : this.startYear,
         startMonth : this.startMonth,
+        startDay : this.startDay,
         });
     } 
 
-    initialYear() { 
-        let initialYear = new Date();
-        let getYear = initialYear.getFullYear();
-        return getYear;
+    initialDate() { 
+        let initialDate = new Date();
+        let getYear = initialDate.getFullYear();
+        let getMonth  = initialDate.getMonth();
+        let getDay  = initialDate.getDate();
+        return {
+        getYear: getYear,
+        getMonth: getMonth,
+        getDay: getDay
+        }
     }
-
-    initialMonth() { 
-        let initialMonth = new Date();
-        let getMonth  = initialMonth.getMonth();
-        return getMonth;
-    } 
 
     _initEvents() {
         this.el.addEventListener('click', this._onCLick.bind(this));
@@ -51,6 +52,10 @@ class App {
         if (target.classList.contains('plus')) {
             this.table.startYear = this.table.startYear + 1;
             this.table.render();
+        } 
+        if (target.classList.contains('style_td')) {
+            console.log(target.innerHTML);
+            target.classList.add('highlight');
         } 
     }
 
