@@ -75,7 +75,7 @@ module.exports = [{"amountDays":"31","month":"January"},{"amountDays":"28","mont
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_list_list__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_table_table__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_data_json__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_data_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__data_data_json__);
 
@@ -83,22 +83,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 class App {
-    constructor({ el }) {
+    constructor({ el, initialDate }) {
         this.el = el;
         this.data = __WEBPACK_IMPORTED_MODULE_1__data_data_json___default.a;
-        let initialDate = this.initialDate();
+        initialDate = this.initialDate();
+        this.selectedTd;
         this.startYear = initialDate.getYear;
         this.startMonth = initialDate.getMonth;
         this.startDay = initialDate.getDay;
         this._initEvents();
 
-        this.table = new __WEBPACK_IMPORTED_MODULE_0__components_list_list__["a" /* default */]({
+        this.table = new __WEBPACK_IMPORTED_MODULE_0__components_table_table__["a" /* default */]({
             data: this.data,
             el: document.querySelector('.calendar'),
             startYear: this.startYear,
             startMonth: this.startMonth,
             startDay: this.startDay
         });
+    }
+
+    highlight(node) {
+        if (this.selectedTd) {
+            this.selectedTd.classList.remove('highlight');
+        }
+        this.selectedTd = node;
+        this.selectedTd.classList.add('highlight');
     }
 
     initialDate() {
@@ -133,9 +142,9 @@ class App {
             this.table.startYear = this.table.startYear + 1;
             this.table.render();
         }
-        if (target.classList.contains('style_td')) {
+        if (target.classList.contains('style_td') && !(target.innerHTML == '')) {
             console.log(target.innerHTML);
-            target.classList.add('highlight');
+            this.highlight(target);
         }
     }
 
@@ -146,7 +155,8 @@ const app = new App({
 });
 
 /***/ }),
-/* 2 */
+/* 2 */,
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -154,7 +164,7 @@ const app = new App({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__data_data_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__data_data_json__);
 
 
-class List {
+class Table {
     constructor(options) {
         this.el = options.el;
         this.startYear = options.startYear;
@@ -176,8 +186,10 @@ class List {
 
         let endDay = toLostDay.getDay();
         if (endDay == 0) endDay = 7;
-        return { firstDay: firstDay - 1,
-            endDay: endDay - 1 };
+        return {
+            firstDay: firstDay - 1,
+            endDay: endDay - 1
+        };
     }
 
     getTable(weekday, daysMonth, arrDay, weekdayEnd) {
@@ -196,9 +208,7 @@ class List {
             arrDay.push(`<td class="style_td"></td>`);
         };
         for (let i = 1; i <= arrDay.length; i++) {
-            if (i % 7 == 6) {
-                arrDay[i] += '</tr><tr>';
-            }
+            if (i % 7 == 6) arrDay[i] += '</tr><tr>';
         };
     }
 
@@ -219,7 +229,6 @@ class List {
             if (id == this.startMonth) {
                 item = `<option class="style_option" value="${dataId}" selected="selected" > ${nameM} </option>`;
             }
-
             return item;
         });
 
@@ -228,7 +237,6 @@ class List {
         let renderCalendar = `<tr>`;
         renderCalendar += str;
         this.el.innerHTML = `
-       
         <div><select id="selectBox" >${nameMonth}</select>
         <div class="year"><span class="minus">-</span>${this.startYear}<span class="plus">+</span></div></div>
         <table><tbody><tr><td class="style_week_td">Mon</td><td class="style_week_td">Tue</td><td class="style_week_td">Wed</td><td class="style_week_td">Thu</td><td class="style_week_td">Fri</td><td class="style_week_td">Sat</td><td class="style_week_td">Sun</td</tr>
@@ -244,7 +252,7 @@ class List {
     }
 }
 
-/* harmony default export */ __webpack_exports__["a"] = (List);
+/* harmony default export */ __webpack_exports__["a"] = (Table);
 
 /***/ })
 /******/ ]);

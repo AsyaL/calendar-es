@@ -1,18 +1,19 @@
 ﻿
-import List from '../components/list/list';
+import Table from '../components/table/table';
 import data from '../data/data.json';
 
 class App {
-		constructor({el}) {
+		constructor({el,initialDate}) {
         this.el = el;
         this.data = data;
-        let initialDate = this.initialDate();
+        initialDate = this.initialDate();
+        this.selectedTd;
         this.startYear = initialDate.getYear;
         this.startMonth = initialDate.getMonth;
         this.startDay = initialDate.getDay;
         this._initEvents();
         
-        this.table = new List({
+        this.table = new Table({
         data: this.data,
         el: document.querySelector('.calendar'),
         startYear : this.startYear,
@@ -20,6 +21,14 @@ class App {
         startDay : this.startDay,
         });
     } 
+
+    highlight(node) {
+        if (this.selectedTd) {
+        this.selectedTd.classList.remove('highlight');
+        }
+        this.selectedTd = node;
+        this.selectedTd.classList.add('highlight');
+    }
 
     initialDate() { 
         let initialDate = new Date();
@@ -53,9 +62,9 @@ class App {
             this.table.startYear = this.table.startYear + 1;
             this.table.render();
         } 
-        if (target.classList.contains('style_td')) {
+        if ((target.classList.contains('style_td')) && !((target.innerHTML == ''))) {
             console.log(target.innerHTML);
-            target.classList.add('highlight');
+            this.highlight(target);
         } 
     }
 
