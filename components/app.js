@@ -44,16 +44,16 @@ class App {
 
     _initEvents() {
         this.el.addEventListener('click', this._onCLick.bind(this));
+        this.el.addEventListener('change', this._onChange.bind(this));
     }
-
+    _onChange() {
+            this.table.startMonth = document.getElementById("selectBox").value;
+            this.table.render();  
+    }
     _onCLick(event) {
         event.preventDefault();
         let target = event.target;
-
-        if (target.classList.contains('style_option')) {
-            this.table.startMonth = document.getElementById("selectBox").value;
-            this.table.render();
-        }   
+ 
         if (target.classList.contains('minus')) {
             this.table.startYear = this.table.startYear - 1;
             this.table.render();

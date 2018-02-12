@@ -75,7 +75,7 @@ module.exports = [{"amountDays":"31","month":"January"},{"amountDays":"28","mont
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_table_table__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_table_table__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_data_json__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_data_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__data_data_json__);
 
@@ -124,16 +124,16 @@ class App {
 
     _initEvents() {
         this.el.addEventListener('click', this._onCLick.bind(this));
+        this.el.addEventListener('change', this._onChange.bind(this));
     }
-
+    _onChange() {
+        this.table.startMonth = document.getElementById("selectBox").value;
+        this.table.render();
+    }
     _onCLick(event) {
         event.preventDefault();
         let target = event.target;
 
-        if (target.classList.contains('style_option')) {
-            this.table.startMonth = document.getElementById("selectBox").value;
-            this.table.render();
-        }
         if (target.classList.contains('minus')) {
             this.table.startYear = this.table.startYear - 1;
             this.table.render();
@@ -155,8 +155,7 @@ const app = new App({
 });
 
 /***/ }),
-/* 2 */,
-/* 3 */
+/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
